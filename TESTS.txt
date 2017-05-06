@@ -1,0 +1,109 @@
+Note: The tests cannot be run independently; They must be run in the given sequence.
+	   Some operations done in a previous test, such as toggling auto-load will affect the following test.
+
+TEST 1:
+1. Remove properties.txt and UserProfile if they are present in the root folder and start the application
+2. Data -> Load all from Disk
+	- Verify a prompt appears asking you to choose a location from which to load data
+3. Click Cancel
+	- Verify the prompt dissapears and nothing happens
+4. Data -> Load all from Disk. This time choose a data folder which contains speeches and click Choose
+	- Verify that a progress bar appear and when this completes, the MP list is populated
+5. Verify that sorting by each column in the MP view works
+6. Verify that there are two comboxes at the bottom of the view: one for Province and one for Party
+7. Verify that filtering using these two comboxes works
+8. Add several MPs to the user profile by double-clicking on them
+	- Verify that their Property "In User Profile?" becomes True
+	- verify that these MPs appear in the Profile Tab, in the MPs table
+9. Select an MP from the MP table in the Profile tab and click Remove MP
+	- Verify that the MP is removed from the list
+10. Add keywords "guns", "health" and "politics"
+	- Verify all of these appear in the keyword list
+11. Select keyword "guns" in the keyword list. Click Edit Keyword and type "health"
+	- Verify that a message appears, forbidding this because "health" is already in the list
+12. Click OK and type "terrorism" instead. Hit return
+13. Select keyword "health" and press Delete Keyword
+	- Verify that the words in the keyword list are now "terrorism" and "politics"
+14. Profile -> Export as JSON
+	- Verify a dialog appears, prompting the user to choose a destination file
+15. Click Cancel
+	- Verify the dialog closes and nothing happens
+16. Profile -> Export as JSON, this time choose a file
+	- Verify that the MP and keywords are written into this file
+17. Click on the Recommended Speeches tab
+	- Verify that a list of speeches is provided
+18. Double click on a speech
+	- Verify that the speech contents are displayed at the bottom
+19. Double click on a speech, click Mark Speech As Read at the bottom of the window
+	- Verify that this speech dissapears from the list
+20. Profile -> Forget read speeches
+	- Verify that a confirmation dialog appears
+21. Click No
+	- Verify that the dialog dissapears and nothing else happens
+22. Profile -> Forget read speeches. This time click Yes
+	- Verify that the speech reappears in the list
+23. From the drop down list at the top of the view, choose Similarity Based
+	- Verify that similarity based recommandations are generated
+24. Help -> About
+	- Verify that a window with information on the Capone application appears
+25. Click OK
+26. Close the application (by closing the window)
+
+
+TEST 2:
+1. Start the application
+2. Go to the Profile tab
+	- Verify that there are no MPs in the user profile (because the saved MPs are not loaded when the MP list has not been populated)
+	- Verify that the keywords "terrorism" and "politics" are still in the keyword list
+3. Data -> Check the Auto Load menu item
+4. Close the application (by closing the window)
+
+
+TEST 3:
+1. Start the application
+	- Verify the MPs are loaded automatically from disk and a progress bar appears
+1. Data -> Load all from Disk
+2. Choose a data folder and click Choose
+3. Click Cancel before the progress bar finishes loading
+	- Verify that the the loading process stops
+4. Data -> Load all from Web
+5. Click Cancel before the progress bar finishes loading
+	- Verify that the the loading process stops
+6. Quit the application
+
+
+TEST 4:
+1. Open the properties.txt file from the root folder
+2. Edit the first line to point to an invalid path
+3. Open the application
+	- Verify that a file chooser appears (because autoload is on but the path is invalid)
+4. Choose a data folder and click Open
+	- Verify that a progress bar appears and the MPs are loaded
+5. Press cancel before the progress bar finishes loading
+	- Verify that the loading process stops
+5. Profile -> Export as Json
+	- Verify that a prompt appears, with the default path being the system default
+6. Click Cancel, quit the application
+
+
+TEST 5:
+1. Remove properties.txt and UserProfile if they are present in the root folder and start the applicaton
+2. Data -> Load all from web
+	- Verify a prompt appears asking you to choose a location where to save the data
+3. Click Cancel
+	- Verify the prompt dissapears and nothing happens 
+4. Data -> Load all from web. This time choose a destination folder and click OK
+	- Verify that a progress bar appears and when this completes, the MP list is populated
+5. Data -> Update Speeches
+	- Verify that a progress bar appears
+6. Click Cancel before the process completes
+7. Data -> Update Speeches, Let the process complete
+	- Verify that the speeches are updated 
+8. Quit the application
+
+
+
+
+NOTE:
+- There are several try/catch blocks that will never be covered by the above testing. This is due to the semantics of Java.
+- When closing the window, the code in CaponeUI (lines 147-149) that writes the UserProfile to disk appears to not get executed when running Eclemma. However, manual testing has shown that it indeed does work and is covered.
